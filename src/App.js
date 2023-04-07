@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+// App.js
 
-function App() {
+import React, { useState } from 'react';
+
+const App = () => {
+  const [greeting, setGreeting] = useState('');
+
+  const handleGreet = async () => {
+    try {
+      const response = await fetch('/greet', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({ name: 'Nadge Sachin' }), // Pass the user's name as data
+      });
+
+      const data = await response.json();
+      setGreeting(data.greeting);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <button onClick={handleGreet}>Hello Server</button>
+      <p>{greeting}</p>
     </div>
   );
-}
+};
 
 export default App;
