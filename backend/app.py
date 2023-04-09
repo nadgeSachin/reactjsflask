@@ -1,6 +1,15 @@
 from flask import Flask, render_template, request, jsonify
+from dotenv import load_dotenv
 
-app = Flask(__name__)
+# Load environment variables from .env file
+load_dotenv()
+
+flask_app = os.environ.get('FLASK_APP')
+flask_env = os.environ.get('FLASK_ENV')
+flask_run_host = os.environ.get('FLASK_RUN_HOST')
+flask_run_port = os.environ.get('FLASK_RUN_PORT')
+
+app = Flask(flask_app)
 
 @app.route('/')
 def index():
@@ -19,4 +28,7 @@ def greet():
     return jsonify({'greeting': greeting})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.env = flask_env
+
+    # Set Flask app run host and port
+    app.run(host=flask_run_host, port=int(flask_run_port), debug=True)
