@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from dotenv import load_dotenv
-
+import os
 # Load environment variables from .env file
 load_dotenv()
 
@@ -9,7 +9,7 @@ flask_env = os.environ.get('FLASK_ENV')
 flask_run_host = os.environ.get('FLASK_RUN_HOST')
 flask_run_port = os.environ.get('FLASK_RUN_PORT')
 
-app = Flask(flask_app)
+app = Flask(__name__)
 
 @app.route('/')
 def index():
